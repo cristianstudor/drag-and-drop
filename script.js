@@ -21,7 +21,6 @@ let listArrays = [];
 
 // Drag Functionality
 let draggedItem;
-let dragging = false;
 let currentColumn;
 
 // Get Arrays from localStorage if available, set default values if not
@@ -163,14 +162,12 @@ function updateItem(id, column) {
   const selectedList = selectedColumn.children[id];
   const selectedText = selectedList.children[0];
 
-  if (!dragging) {
-    if (!selectedText.textContent) {
-      delete selectedArray[id];
-    } else {
-      selectedArray[id] = selectedText.textContent;
-    }
-    updateDOM();
+  if (!selectedText.textContent) {
+    delete selectedArray[id];
+  } else {
+    selectedArray[id] = selectedText.textContent;
   }
+  updateDOM();
 }
 
 // When Item Enters Column Area
@@ -182,7 +179,6 @@ function dragEnter(column) {
 // When Item Starts Dragging
 function drag(e) {
   draggedItem = e.target;
-  dragging = true;
 }
 
 // Column Allows for Item to Drop
@@ -201,7 +197,6 @@ function drop(e) {
   const parent = listColumns[currentColumn];
   parent.appendChild(draggedItem);
   // Dragging complete
-  dragging = false;
   rebuildArrays();
 }
 
